@@ -36,6 +36,12 @@ module.exports = {
       warnings: false,
       errors: true
     },
+    proxy: {
+      [process.env.VUE_APP_BASE_API]: {
+        target: 'http://ihrm-java.itheima.net/',
+        changeOrigin: true
+      }
+    }
     // before: require('./mock/mock-server.js')
   },
   configureWebpack: {
