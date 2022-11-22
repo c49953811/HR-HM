@@ -12,26 +12,22 @@ import App from './App'
 import store from './store'
 import router from './router'
 
+// import 语法 * as =》导出所有export 到 变量directives
+import * as directives from '@/directives'
 import '@/icons' // icon
 import '@/permission' // permission control
-
-/**
- * If you don't want to use mock-server
- * you want to use MockJs for mock api
- * you can execute: mockXHR()
- *
- * Currently MockJs will be used in the production environment,
- * please remove it before going online ! ! !
- */
-// if (process.env.NODE_ENV === 'production') {
-//   const { mockXHR } = require('../mock')
-//   mockXHR()
-// }
 
 // set ElementUI lang to EN
 Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明
 // Vue.use(ElementUI)
+
+// 遍历directives变量 先用keys() 将其改为数组再遍历
+// ['imageerror','',...]
+Object.keys(directives).forEach(key => {
+// key=>数组的属性名,这是过滤器名称  directives[key]是过滤器的方法
+  Vue.directive(key, directives[key])
+})
 
 Vue.config.productionTip = false
 
