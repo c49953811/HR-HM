@@ -15,7 +15,7 @@ export function getUserInfo(token) {
   })
 }
 // 获取员工个人信息
-export function getUserDatailById(id) {
+export function getUserDetailById(id) {
   return request({
     url: `/sys/user/${id}`
     // method: 'GET'  默认接口是GET可不写
@@ -23,6 +23,4 @@ export function getUserDatailById(id) {
 }
 
 // 退出登陆
-export function logout() {
-
-}
+export function logout() {}

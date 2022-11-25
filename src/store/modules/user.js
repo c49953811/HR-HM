@@ -1,4 +1,4 @@
-import { login, getUserInfo, getUserDatailById } from '@/api/user'
+import { login, getUserInfo, getUserDetailById } from '@/api/user'
 import { setItem, getItem, removeItem } from '@/utils/storage'
 import { setTimeStamp } from '@/utils/auth'
 const TOKEN_KEY = 'Hr_Token' // 设置一个独一无二的ken
@@ -38,7 +38,7 @@ export default {
     async getUserInfo(store) {
       const res = await getUserInfo()
       // 上序同步完成后 获取员工信息
-      const baseInfo = await getUserDatailById(res.userId)
+      const baseInfo = await getUserDetailById(res.userId)
       // 合并两个接口返回的数据
       store.commit('setUserInfo', { ...res, ...baseInfo })
       return res

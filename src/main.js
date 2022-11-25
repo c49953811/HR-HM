@@ -11,9 +11,10 @@ import '@/styles/index.scss' // global css
 import App from './App'
 import store from './store'
 import router from './router'
-
+import Component from '@/components'
 // import 语法 * as =》导出所有export 到 变量directives
 import * as directives from '@/directives'
+import * as filters from '@/filters'
 import '@/icons' // icon
 import '@/permission' // permission control
 
@@ -24,16 +25,19 @@ Vue.use(ElementUI, { locale })
 
 // 遍历directives变量 先用keys() 将其改为数组再遍历
 // ['imageerror','',...]
-Object.keys(directives).forEach(key => {
-// key=>数组的属性名,这是过滤器名称  directives[key]是过滤器的方法
+Object.keys(directives).forEach((key) => {
+  // key=>数组的属性名,这是过滤器名称  directives[key]是过滤器的方法
   Vue.directive(key, directives[key])
 })
-
+Object.keys(filters).forEach((key) => {
+  Vue.filter(key, filters[key])
+})
+Vue.use(Component)
 Vue.config.productionTip = false
 
 new Vue({
   el: '#app',
   router,
   store,
-  render: h => h(App)
+  render: (h) => h(App)
 })
