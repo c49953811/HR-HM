@@ -55,12 +55,25 @@ export const constantRoutes = [
     path: '/',
     component: Layout,
     redirect: '/dashboard',
-    children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
-    }]
+    children: [
+      {
+        path: 'dashboard',
+        name: 'Dashboard',
+        component: () => import('@/views/dashboard/index'),
+        meta: { title: '首页', icon: 'dashboard' }
+      }
+    ]
+  },
+  {
+    path: '/import',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/import')
+      }
+    ]
   },
 
   // 404 page must be placed at the end !!!
@@ -77,11 +90,12 @@ export const asyncRoutes = [
   settingRouter,
   socialRouter
 ]
-const createRouter = () => new Router({
-  // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
-  routes: [...constantRoutes, ...asyncRoutes] // 临时合并动态静态路由
-})
+const createRouter = () =>
+  new Router({
+    // mode: 'history', // require service support
+    scrollBehavior: () => ({ y: 0 }),
+    routes: [...constantRoutes, ...asyncRoutes] // 临时合并动态静态路由
+  })
 
 const router = createRouter()
 

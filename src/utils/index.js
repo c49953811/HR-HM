@@ -17,8 +17,8 @@ export function parseTime(time, cFormat) {
   if (typeof time === 'object') {
     date = time
   } else {
-    if ((typeof time === 'string')) {
-      if ((/^[0-9]+$/.test(time))) {
+    if (typeof time === 'string') {
+      if (/^[0-9]+$/.test(time)) {
         // support "1548221490638"
         time = parseInt(time)
       } else {
@@ -28,7 +28,7 @@ export function parseTime(time, cFormat) {
       }
     }
 
-    if ((typeof time === 'number') && (time.toString().length === 10)) {
+    if (typeof time === 'number' && time.toString().length === 10) {
       time = time * 1000
     }
     date = new Date(time)
@@ -45,7 +45,9 @@ export function parseTime(time, cFormat) {
   const time_str = format.replace(/{([ymdhisa])+}/g, (result, key) => {
     const value = formatObj[key]
     // Note: getDay() returns 0 on Sunday
-    if (key === 'a') { return ['日', '一', '二', '三', '四', '五', '六'][value ] }
+    if (key === 'a') {
+      return ['日', '一', '二', '三', '四', '五', '六'][value]
+    }
     return value.toString().padStart(2, '0')
   })
   return time_str
@@ -105,7 +107,7 @@ export function param2Obj(url) {
   }
   const obj = {}
   const searchArr = search.split('&')
-  searchArr.forEach(v => {
+  searchArr.forEach((v) => {
     const index = v.indexOf('=')
     if (index !== -1) {
       const name = v.substring(0, index)
@@ -114,4 +116,27 @@ export function param2Obj(url) {
     }
   })
   return obj
+}
+
+/** *
+ *
+ *  将列表行数据转为树形数据 ===》递归算法==》小心死循环
+ * **/
+export function tranListToTreeData(list, rootValue) {
+  const arr = []
+  list.forEach((item) => {
+    // 数据最根部pid是"",rootValue最开始也是""
+    if (item.pid === rootValue) {
+      // 成立就要去找item下面有没有子节点
+      const children = tranListToTreeData(list, item.id)
+      // 因为该函数是回调，所以也会返回一个数组，如果下列条件成立，该数组为children数据
+      if (children.length) {
+        // 如果长度大于0 说明找到了子节点,用.children获取二级结构数据
+        // 如果等于0 ，说明没有子节点，直接把item数据push进数组
+        item.children = children
+      }
+      arr.push(item)
+    }
+  })
+  return arr
 }
