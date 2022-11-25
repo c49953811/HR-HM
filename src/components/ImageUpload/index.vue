@@ -31,8 +31,8 @@
 <script>
 import COS from 'cos-js-sdk-v5'
 const cos = new COS({
-  SecretId: 'AKIDHVYM1W0VvkXEvfKn7HFc1MfAe4UsIXkv',
-  SecretKey: 'BEEC0lSzJRVahpsrkhYRLJKMQn4C70jH'
+  SecretId: 'xxxx',
+  SecretKey: 'xxxx'
 })
 export default {
   props: {},
@@ -90,7 +90,7 @@ export default {
         this.showPercent = true // 显示进度条
         cos.putObject(
           {
-            Bucket: 'ziyuexinghuen-1315345462', // 存储桶
+            Bucket: 'xxxxx', // 存储桶
             Region: 'ap-beijing', // 地域
             Key: params.file.name, // 文件名
             StorageClass: 'STANDARD', // 上传的模式类型 直接默认 标准模式即可
