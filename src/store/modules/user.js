@@ -1,5 +1,6 @@
 import { login, getUserInfo, getUserDetailById } from '@/api/user'
 import { setItem, getItem, removeItem } from '@/utils/storage'
+import { resetRouter } from '@/router'
 import { setTimeStamp } from '@/utils/auth'
 const TOKEN_KEY = 'Hr_Token' // 设置一个独一无二的ken
 export default {
@@ -49,6 +50,17 @@ export default {
       store.commit('removeToken')
       // 删除用户资料
       store.commit('removeUserInfo')
+      // 重置路由
+      resetRouter()
+      // 设置权限模块下路由为初始状态
+      // vuex子模块在没加锁的情况下，直接调用
+      // 因为不加命名空间的情况下。所有mutations和actions都挂在全局，所有可以直接调用
+      // 但是加了命名空间的子模块他的store 指的不是全局的store
+      // mutations 有3个参数 第一个是名称 第二个是载荷payload(修改的value) 第三个是个对象
+      // 如果想调用加了命名空间的子模块 第三个参数需要加 {root:true}
+      // root：true 是指调用根级的mutations和actions
+      // 加了root :true mutations的名称就得加哪个模块下的名称
+      store.commit('permission/setRoutes', [], { root: true })
     }
   }
 }
