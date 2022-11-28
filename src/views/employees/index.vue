@@ -67,6 +67,7 @@
             <el-button
               type="text"
               size="small"
+              :disabled="!checkPermission('POINT-USER-UPDATE')"
               @click="$router.push(`/employees/detail/${row.id}`)"
             >查看</el-button>
             <el-button type="text" size="small">转正</el-button>
